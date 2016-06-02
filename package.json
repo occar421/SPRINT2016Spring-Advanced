@@ -7,7 +7,7 @@
 		"test": "tests"
 	},
 	"scripts": {
-		"start": "dotnet run -p Webocket\\src\\Webocket",
+		"start": "cd Webocket\\src\\Webocket && dotnet run",
 		"test": "mocha tests --recursive"
 	},
 	"repository": {
