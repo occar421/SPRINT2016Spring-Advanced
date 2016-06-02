@@ -1,6 +1,7 @@
 'use strict';
 
-var ws = new WebSocket('ws://localhost:3000/');
+var host = window.location.host;
+var ws = new WebSocket('ws://' + host + '/');
 
 $(function () {
   $('form').submit(function(){
