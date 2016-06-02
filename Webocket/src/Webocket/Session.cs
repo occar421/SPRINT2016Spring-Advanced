@@ -36,9 +36,7 @@ namespace Webocket
 			{
 				var data = Encoding.UTF8.GetString(buffer, 0, received.Count);
 				var repeatContainer = new ResponseContainer { Data = data, Id = Id };
-				var repeatBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(repeatContainer));
-
-				await Broadcast(repeatBytes);
+				await Broadcast(repeatContainer.ToBytes());
 
 				if (data.StartsWith("bot "))
 				{
@@ -47,8 +45,7 @@ namespace Webocket
 					{
 						case "ping":
 							var pingContainer = new ResponseContainer { Data = "pong", Id = Id };
-							var pingBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(pingContainer));
-							await Broadcast(pingBytes);
+							await Broadcast(pingContainer.ToBytes());
 							break;
 
 						case "todo":
