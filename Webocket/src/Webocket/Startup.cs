@@ -14,8 +14,11 @@ namespace Webocket
 {
 	public class Startup
 	{
-		private static readonly Lazy<ConcurrentBag<Session>> lazy = new Lazy<ConcurrentBag<Session>>(() => new ConcurrentBag<Session>());
-		public static ConcurrentBag<Session> Sockets => lazy.Value;
+		private static readonly Lazy<ConcurrentBag<Session>> socketsLazy = new Lazy<ConcurrentBag<Session>>(() => new ConcurrentBag<Session>());
+		public static ConcurrentBag<Session> Sockets => socketsLazy.Value;
+
+		private static readonly Lazy<ConcurrentBag<string>> todosLazy = new Lazy<ConcurrentBag<string>>(() => new ConcurrentBag<string>());
+		public static ConcurrentBag<string> Todos => todosLazy.Value;
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		// For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
