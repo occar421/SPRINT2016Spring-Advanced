@@ -49,7 +49,7 @@ namespace Webocket
 							break;
 
 						case "todo":
-							if (elem.Length == 3)
+							if (elem.Length >= 3)
 							{
 								switch (elem[2])
 								{
@@ -60,6 +60,19 @@ namespace Webocket
 										break;
 
 									case "list":
+										if (Startup.Todos.Any())
+										{
+											foreach (var item in Startup.Todos)
+											{
+												var itemContainer = new ResponseContainer { Data = $"{item.Key} {item.Value}", Id = Id };
+												await Broadcast(repeatContainer.ToBytes());
+											}
+										}
+										else
+										{
+											var emptyTodoContainer = new ResponseContainer { Data = "todo empty", Id = Id };
+											await Broadcast(emptyTodoContainer.ToBytes());
+										}
 										break;
 
 									default:
