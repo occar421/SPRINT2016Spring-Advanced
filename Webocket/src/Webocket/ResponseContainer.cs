@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace Webocket
 {
@@ -13,5 +14,10 @@ namespace Webocket
 
 		[JsonProperty(PropertyName = "id")]
 		public int Id { get; set; }
+
+		public byte[] ToBytes()
+		{
+			return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(this));
+		}
 	}
 }
