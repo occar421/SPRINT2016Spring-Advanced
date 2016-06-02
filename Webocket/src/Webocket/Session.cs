@@ -50,6 +50,27 @@ namespace Webocket
 							var pingBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(pingContainer));
 							await Broadcast(pingBytes);
 							break;
+
+						case "todo":
+							if (elem.Length == 3)
+							{
+								switch (elem[2])
+								{
+									case "add":
+										break;
+
+									case "delete":
+										break;
+
+									case "list":
+										break;
+
+									default:
+										break;
+								}
+							}
+							break;
+
 						default:
 							break;
 					}
