@@ -79,7 +79,18 @@ namespace Webocket
 									case "delete":
 										if (elem.Length == 4)
 										{
-
+											var name = elem[3];
+											string undef;
+											if (Startup.Todos.TryRemove(name, out undef))
+											{
+												var deletedContainer = new ResponseContainer { Data = "todo deleted", Id = Id };
+												await Broadcast(deletedContainer.ToBytes());
+											}
+											else
+											{
+												var errorContainer = new ResponseContainer { Data = "error occurred while deleting", Id = Id };
+												await Broadcast(errorContainer.ToBytes());
+											}
 										}
 										else
 										{
