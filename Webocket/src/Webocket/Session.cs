@@ -56,7 +56,18 @@ namespace Webocket
 									case "add":
 										if (elem.Length >= 5)
 										{
-
+											var name = elem[3];
+											var content = data.Substring(18);
+											if (Startup.Todos.TryAdd(name, content))
+											{
+												var addedContainer = new ResponseContainer { Data = "todo added", Id = Id };
+												await Broadcast(addedContainer.ToBytes());
+											}
+											else
+											{
+												var errorContainer = new ResponseContainer { Data = "error occurred while adding", Id = Id };
+												await Broadcast(errorContainer.ToBytes());
+											}
 										}
 										else
 										{
