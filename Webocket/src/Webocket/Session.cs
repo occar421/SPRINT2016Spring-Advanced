@@ -57,7 +57,7 @@ namespace Webocket
 										if (elem.Length >= 5)
 										{
 											var name = elem[3];
-											var content = data.Substring(18);
+											var content = string.Join(" ", elem.Skip(4));
 											if (Startup.Todos.TryAdd(name, content))
 											{
 												var addedContainer = new ResponseContainer { Data = "todo added", Id = Id };
@@ -100,15 +100,13 @@ namespace Webocket
 										break;
 
 									case "list":
-										if (elem.Length != 3)
+										if (elem.Length == 3)
 										{
 											if (Startup.Todos.Any())
 											{
-												foreach (var item in Startup.Todos)
-												{
-													var itemContainer = new ResponseContainer { Data = $"{item.Key} {item.Value}", Id = Id };
-													await Broadcast(repeatContainer.ToBytes());
-												}
+												var allData = string.Join("\n", Startup.Todos.Select(x => $"{x.Key} {x.Value}"));
+												var itemContainer = new ResponseContainer { Data = allData, Id = Id };
+												await Broadcast(itemContainer.ToBytes());
 											}
 											else
 											{
@@ -158,7 +156,7 @@ namespace Webocket
 			await Task.WhenAll(Startup.Sockets.Select(x =>
 			{
 				WebSocket s;
-				if (!x.socket.TryGetTarget(out s))
+				if (!x.socket.TryGetTarget(out s) || s.State != WebSocketState.Open)
 				{
 					return Task.CompletedTask;
 				}
