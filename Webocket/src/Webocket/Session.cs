@@ -54,30 +54,61 @@ namespace Webocket
 								switch (elem[2])
 								{
 									case "add":
+										if (elem.Length >= 5)
+										{
+
+										}
+										else
+										{
+											var usageContainer = new ResponseContainer { Data = "usage: bot todo add name content", Id = Id };
+											await Broadcast(usageContainer.ToBytes());
+										}
 										break;
 
 									case "delete":
+										if (elem.Length == 4)
+										{
+
+										}
+										else
+										{
+											var usageContainer = new ResponseContainer { Data = "usage: bot todo delete name", Id = Id };
+											await Broadcast(usageContainer.ToBytes());
+										}
 										break;
 
 									case "list":
-										if (Startup.Todos.Any())
+										if (elem.Length != 3)
 										{
-											foreach (var item in Startup.Todos)
+											if (Startup.Todos.Any())
 											{
-												var itemContainer = new ResponseContainer { Data = $"{item.Key} {item.Value}", Id = Id };
-												await Broadcast(repeatContainer.ToBytes());
+												foreach (var item in Startup.Todos)
+												{
+													var itemContainer = new ResponseContainer { Data = $"{item.Key} {item.Value}", Id = Id };
+													await Broadcast(repeatContainer.ToBytes());
+												}
+											}
+											else
+											{
+												var emptyTodoContainer = new ResponseContainer { Data = "todo empty", Id = Id };
+												await Broadcast(emptyTodoContainer.ToBytes());
 											}
 										}
 										else
 										{
-											var emptyTodoContainer = new ResponseContainer { Data = "todo empty", Id = Id };
-											await Broadcast(emptyTodoContainer.ToBytes());
+											var usageContainer = new ResponseContainer { Data = "usage: bot todo list", Id = Id };
+											await Broadcast(usageContainer.ToBytes());
 										}
 										break;
 
 									default:
 										break;
 								}
+							}
+							else
+							{
+								var usageContainer = new ResponseContainer { Data = "usage: bot todo command [name] [content]", Id = Id };
+								await Broadcast(usageContainer.ToBytes());
 							}
 							break;
 
