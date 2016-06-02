@@ -10,5 +10,8 @@ namespace Webocket
 	{
 		[JsonProperty(PropertyName = "data")]
 		public string Data { get; set; }
+
+		[JsonProperty(PropertyName = "id")]
+		public int Id { get; set; }
 	}
 }
