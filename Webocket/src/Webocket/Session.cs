@@ -122,6 +122,10 @@ namespace Webocket
 										break;
 
 									default:
+										{
+											var usageContainer = new ResponseContainer { Data = "usage: bot todo command [name] [content]", Id = Id, IsBot = true };
+											await Broadcast(usageContainer.ToBytes());
+										}
 										break;
 								}
 							}
@@ -133,6 +137,10 @@ namespace Webocket
 							break;
 
 						default:
+							{
+								var usageContainer = new ResponseContainer { Data = "usage: bot kind [option]", Id = Id, IsBot = true };
+								await Broadcast(usageContainer.ToBytes());
+							}
 							break;
 					}
 				}
