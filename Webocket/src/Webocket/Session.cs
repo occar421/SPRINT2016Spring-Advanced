@@ -142,6 +142,25 @@ namespace Webocket
 							await Broadcast(timeContainer.ToBytes());
 							break;
 
+						case "cons":
+						case "connections":
+							var idList = Startup.Sockets.Select(x =>
+							{
+								WebSocket _s;
+								if (x.socket.TryGetTarget(out _s) && _s.State == WebSocketState.Open)
+								{
+									return x.Id;
+								}
+								else
+								{
+									return -1;
+								}
+							}).Where(x => x > 0);
+							var idStr = "[" + string.Join(", ", idList) + "]";
+							var connectionsContainer = new ResponseContainer { Data = idStr, Id = Id, IsBot = true };
+							await Broadcast(connectionsContainer.ToBytes());
+							break;
+
 						default:
 							{
 								var usageContainer = new ResponseContainer { Data = "usage: bot kind [option]", Id = Id, IsBot = true };
