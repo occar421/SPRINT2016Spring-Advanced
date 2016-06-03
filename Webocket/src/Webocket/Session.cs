@@ -161,6 +161,11 @@ namespace Webocket
 							await Broadcast(connectionsContainer.ToBytes());
 							break;
 
+						case "help":
+							var helpContainer = new ResponseContainer { Data = "** bot commands**\n\n'ping'\n=> returns \"pong\"\n\n'todo'\n=> see todo's usage by \"bot todo\"\n\n'time'\n=> returns current time\n\n'connections' or 'cons'\n=> returns connection ids\n\n'help'\n=> returns all bot commands", Id = Id, IsBot = true };
+							await Broadcast(helpContainer.ToBytes());
+							break;
+
 						default:
 							{
 								var usageContainer = new ResponseContainer { Data = "USAGE: bot kind [options]\n\"bot help\" may help you.", Id = Id, IsBot = true };
