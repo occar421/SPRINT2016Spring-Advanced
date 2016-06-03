@@ -8,13 +8,18 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading;
 using System.Net.WebSockets;
-using System.Text;
-using Newtonsoft.Json;
+using System.Collections.Concurrent;
 
 namespace Webocket
 {
 	public class Startup
 	{
+		private static readonly Lazy<ConcurrentBag<Session>> socketsLazy = new Lazy<ConcurrentBag<Session>>(() => new ConcurrentBag<Session>());
+		public static ConcurrentBag<Session> Sockets => socketsLazy.Value;
+
+		private static readonly Lazy<ConcurrentDictionary<string, string>> todosLazy = new Lazy<ConcurrentDictionary<string, string>>(() => new ConcurrentDictionary<string, string>());
+		public static ConcurrentDictionary<string, string> Todos => todosLazy.Value;
+
 		// This method gets called by the runtime. Use this method to add services to the container.
 		// For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
 		public void ConfigureServices(IServiceCollection services)
@@ -29,26 +34,17 @@ namespace Webocket
 			{
 				if (context.WebSockets.IsWebSocketRequest)
 				{
-					var webSocket = await context.WebSockets.AcceptWebSocketAsync();
-
-					var buffer = new byte[1024];
-					var received = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-
-					while (received.MessageType == WebSocketMessageType.Text)
+					using (var webSocket = await context.WebSockets.AcceptWebSocketAsync())
 					{
-						var data = Encoding.UTF8.GetString(buffer, 0, received.Count);
-						var container = new ResponseContainer { Data = data };
-						var bytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(container));
-						await webSocket.SendAsync(new ArraySegment<byte>(bytes, 0, bytes.Length), received.MessageType, received.EndOfMessage, CancellationToken.None);
+						if (webSocket?.State == WebSocketState.Open)
+						{
+							var session = new Session(webSocket);
+							Sockets.Add(session);
 
-						received = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+							await session.Deal();
+							return;
+						}
 					}
-
-					await webSocket.CloseAsync(received.CloseStatus.Value, received.CloseStatusDescription, CancellationToken.None);
-
-					webSocket.Dispose();
-
-					return;
 				}
 				await next();
 			});
