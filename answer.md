@@ -1,19 +1,30 @@
 ## STEP1. デプロイ情報
-以下の情報を入力してください。
-- チャットボットをデプロイしたサーバーのURL
-- デプロイに使ったサービス: AWS / DigitalOcean / Sakura / Heroku / Cloudn / etc.
+- http://webocket-sprint2016spring.azurewebsites.net/
+- Azure Web App, AppVeyor
 
 ## STEP2. 必須機能の実装
-必須機能を実装する上で、創意工夫した点があれば記述してください。
+- C#による実装
+- RCリリースされたばかりの技術を利用
+- 機能追加がしやすい設計を心掛けた
+- CIサービスの利用による仕様が実装されているかの確認 (https://ci.appveyor.com/project/occar421/sprint2016spring-advanced)
 
 ## STEP3. 独自コマンドの実装
-追加したコマンドの内容について説明をしてください。
+未実装(追加したコマンドの内容について説明をしてください。)
 
 ## 今回の開発に使用した技術
-今回のチャットボット開発に利用した言語、ライブラリ、フレームワーク、API等を記載してください。
+### 基本問題
+- TypeScript
+- Node.js
+- VisualStudio Code
+
+### 応用問題
+- C#
+- ASP.NET Core 1.0 RC2
+- Visual Studio 2015
+- Node.js (mocha)
 
 ## その他独自実装した内容の説明
-自分自身がオリジナルで実装した内容について説明してください。
+- 間違ったbotのコマンドに対してはUsageを出す
 
 ## その他創意工夫点、アピールポイントなど
-レビューワーをうならせる創意工夫やアピールポイントがあればこちらに記載してください。
+ジェバンニが一晩でやってくれました  
