@@ -15,6 +15,9 @@ namespace Webocket
 		[JsonProperty(PropertyName = "id")]
 		public int Id { get; set; }
 
+		[JsonProperty(PropertyName = "isBot")]
+		public bool IsBot { get; set; } = false;
+
 		public byte[] ToBytes()
 		{
 			return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(this));
