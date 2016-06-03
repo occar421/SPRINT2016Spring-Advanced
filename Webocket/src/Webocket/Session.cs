@@ -71,7 +71,7 @@ namespace Webocket
 										}
 										else
 										{
-											var usageContainer = new ResponseContainer { Data = "usage: bot todo add name content", Id = Id, IsBot = true };
+											var usageContainer = new ResponseContainer { Data = "USAGE: bot todo add name content", Id = Id, IsBot = true };
 											await Broadcast(usageContainer.ToBytes());
 										}
 										break;
@@ -94,7 +94,7 @@ namespace Webocket
 										}
 										else
 										{
-											var usageContainer = new ResponseContainer { Data = "usage: bot todo delete name", Id = Id, IsBot = true };
+											var usageContainer = new ResponseContainer { Data = "USAGE: bot todo delete name", Id = Id, IsBot = true };
 											await Broadcast(usageContainer.ToBytes());
 										}
 										break;
@@ -116,14 +116,14 @@ namespace Webocket
 										}
 										else
 										{
-											var usageContainer = new ResponseContainer { Data = "usage: bot todo list", Id = Id, IsBot = true };
+											var usageContainer = new ResponseContainer { Data = "USAGE: bot todo list", Id = Id, IsBot = true };
 											await Broadcast(usageContainer.ToBytes());
 										}
 										break;
 
 									default:
 										{
-											var usageContainer = new ResponseContainer { Data = "usage: bot todo command [name] [content]", Id = Id, IsBot = true };
+											var usageContainer = new ResponseContainer { Data = "USAGE: bot todo command [name] [content]", Id = Id, IsBot = true };
 											await Broadcast(usageContainer.ToBytes());
 										}
 										break;
@@ -131,7 +131,7 @@ namespace Webocket
 							}
 							else
 							{
-								var usageContainer = new ResponseContainer { Data = "usage: bot todo command [name] [content]", Id = Id, IsBot = true };
+								var usageContainer = new ResponseContainer { Data = "USAGE: bot todo command [name] [content]\ncommands => {'add', 'delete', 'list'}", Id = Id, IsBot = true };
 								await Broadcast(usageContainer.ToBytes());
 							}
 							break;
@@ -163,7 +163,7 @@ namespace Webocket
 
 						default:
 							{
-								var usageContainer = new ResponseContainer { Data = "usage: bot kind [option]", Id = Id, IsBot = true };
+								var usageContainer = new ResponseContainer { Data = "USAGE: bot kind [options]\n\"bot help\" may help you.", Id = Id, IsBot = true };
 								await Broadcast(usageContainer.ToBytes());
 							}
 							break;
