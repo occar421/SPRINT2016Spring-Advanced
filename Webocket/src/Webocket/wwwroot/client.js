@@ -16,7 +16,7 @@ $(function () {
 	ws.onmessage = function (msg) {
 		var returnObject = JSON.parse(msg.data);
 		var content = returnObject.data.split('\n').join('<br />');
-		$('#messages').append($('<li class="' + (returnObject.isBot ? 'bot' : 'user') + '">').append($('<span id="clientId">').text(returnObject.id)).append($('<span id="clientMessage">' + content + '<span />')));
+		$('#messages').append($('<li class="' + (returnObject.isBot ? 'bot' : 'user') + '">').append($('<span class="clientId">').text(returnObject.id)).append($('<span class="clientMessage">' + content + '<span />')));
 	};
 	ws.onerror = function (err) {
 		console.log("err", err);
