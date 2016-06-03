@@ -136,6 +136,12 @@ namespace Webocket
 							}
 							break;
 
+						case "time":
+							var time = DateTime.UtcNow.AddHours(9); // Tokyo
+							var timeContainer = new ResponseContainer { Data = time.ToString(), Id = Id, IsBot = true };
+							await Broadcast(timeContainer.ToBytes());
+							break;
+
 						default:
 							{
 								var usageContainer = new ResponseContainer { Data = "usage: bot kind [option]", Id = Id, IsBot = true };
