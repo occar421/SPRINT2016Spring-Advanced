@@ -44,7 +44,7 @@ namespace Webocket
 					switch (elem[1])
 					{
 						case "ping":
-							var pingContainer = new ResponseContainer { Data = "pong", Id = Id };
+							var pingContainer = new ResponseContainer { Data = "pong", Id = Id, IsBot = true };
 							await Broadcast(pingContainer.ToBytes());
 							break;
 
@@ -60,18 +60,18 @@ namespace Webocket
 											var content = string.Join(" ", elem.Skip(4));
 											if (Startup.Todos.TryAdd(name, content))
 											{
-												var addedContainer = new ResponseContainer { Data = "todo added", Id = Id };
+												var addedContainer = new ResponseContainer { Data = "todo added", Id = Id, IsBot = true };
 												await Broadcast(addedContainer.ToBytes());
 											}
 											else
 											{
-												var errorContainer = new ResponseContainer { Data = "error occurred while adding", Id = Id };
+												var errorContainer = new ResponseContainer { Data = "error occurred while adding", Id = Id, IsBot = true };
 												await Broadcast(errorContainer.ToBytes());
 											}
 										}
 										else
 										{
-											var usageContainer = new ResponseContainer { Data = "usage: bot todo add name content", Id = Id };
+											var usageContainer = new ResponseContainer { Data = "usage: bot todo add name content", Id = Id, IsBot = true };
 											await Broadcast(usageContainer.ToBytes());
 										}
 										break;
@@ -83,18 +83,18 @@ namespace Webocket
 											string undef;
 											if (Startup.Todos.TryRemove(name, out undef))
 											{
-												var deletedContainer = new ResponseContainer { Data = "todo deleted", Id = Id };
+												var deletedContainer = new ResponseContainer { Data = "todo deleted", Id = Id, IsBot = true };
 												await Broadcast(deletedContainer.ToBytes());
 											}
 											else
 											{
-												var errorContainer = new ResponseContainer { Data = "error occurred while deleting", Id = Id };
+												var errorContainer = new ResponseContainer { Data = "error occurred while deleting", Id = Id, IsBot = true };
 												await Broadcast(errorContainer.ToBytes());
 											}
 										}
 										else
 										{
-											var usageContainer = new ResponseContainer { Data = "usage: bot todo delete name", Id = Id };
+											var usageContainer = new ResponseContainer { Data = "usage: bot todo delete name", Id = Id, IsBot = true };
 											await Broadcast(usageContainer.ToBytes());
 										}
 										break;
@@ -105,18 +105,18 @@ namespace Webocket
 											if (Startup.Todos.Any())
 											{
 												var allData = string.Join("\n", Startup.Todos.Select(x => $"{x.Key} {x.Value}"));
-												var itemContainer = new ResponseContainer { Data = allData, Id = Id };
+												var itemContainer = new ResponseContainer { Data = allData, Id = Id, IsBot = true };
 												await Broadcast(itemContainer.ToBytes());
 											}
 											else
 											{
-												var emptyTodoContainer = new ResponseContainer { Data = "todo empty", Id = Id };
+												var emptyTodoContainer = new ResponseContainer { Data = "todo empty", Id = Id, IsBot = true };
 												await Broadcast(emptyTodoContainer.ToBytes());
 											}
 										}
 										else
 										{
-											var usageContainer = new ResponseContainer { Data = "usage: bot todo list", Id = Id };
+											var usageContainer = new ResponseContainer { Data = "usage: bot todo list", Id = Id, IsBot = true };
 											await Broadcast(usageContainer.ToBytes());
 										}
 										break;
@@ -127,7 +127,7 @@ namespace Webocket
 							}
 							else
 							{
-								var usageContainer = new ResponseContainer { Data = "usage: bot todo command [name] [content]", Id = Id };
+								var usageContainer = new ResponseContainer { Data = "usage: bot todo command [name] [content]", Id = Id, IsBot = true };
 								await Broadcast(usageContainer.ToBytes());
 							}
 							break;
