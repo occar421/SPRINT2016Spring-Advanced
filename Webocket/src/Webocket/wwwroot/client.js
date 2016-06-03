@@ -18,7 +18,7 @@ $(function () {
 		var content = returnObject.data.split('\n').join('<br />');
 		$('#messages').append($('<li class="' + (returnObject.isBot ? 'bot' : 'user') + '">').append($('<span class="clientId">').text(returnObject.id)).append($('<span class="clientMessage">' + content + '<span />')));
 
-		$("html, body").animate({ scrollTop: $(document).height() }, 1000);
+		$("html, body").animate({ scrollTop: $(document).height() }, 0);
 	};
 	ws.onerror = function (err) {
 		console.log("err", err);
